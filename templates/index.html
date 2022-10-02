@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,16 @@
     <title>Find My MP</title>
     <link rel="stylesheet" href="/static/index.css">
 </head>
+
 <body>
     <h1>Find your MP!</h1>
     <div class="search">
-        <input type="text" placeholder="Postcode">
+
+        <form action="/search" method="GET">
+            <input type="text" placeholder="Postcode" name="search" id="search">
+            <input type="submit" value="Submit">
+        </form>
     </div>
 </body>
+
 </html>
