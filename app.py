@@ -23,8 +23,9 @@ def search():
             # mp = json.loads(data)
             constituency = data["name"]
             mpName = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]
-            
-            return constituency, mpName
+            mpParty = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]["latestParty"]
+
+            return render_template('results.html', constituency, mpName, mpParty)
     else:
         return 400
 
