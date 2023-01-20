@@ -19,8 +19,9 @@ def search():
             return render_template('index.html', notFound=True)
         else:
             print(data)
-            mp = json.loads(data)
-            print(mp["nameDisplayAs"])
+            data = data["items"][0]["value"]
+            # mp = json.loads(data)
+            print(data["nameDisplayAs"])
             return 
     else:
         return 400
