@@ -18,11 +18,13 @@ def search():
         if data["totalResults"] == 0:
             return render_template('index.html', notFound=True)
         else:
-            print(data)
             data = data["items"][0]["value"]
+            print(data)
             # mp = json.loads(data)
-            print(data["nameDisplayAs"])
-            return 
+            constituency = data["name"]
+            mpName = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]
+            
+            return constituency, mpName
     else:
         return 400
 
