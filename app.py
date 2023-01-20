@@ -14,13 +14,13 @@ def search():
     url = "https://members-api.parliament.uk/api/Location/Constituency/Search?searchText="+ postcode
     resp = requests.get(url)
     if resp.status_code == 200:
+        data = resp.json()
         if data["totalResults"] == 0:
             return render_template('index.html', notFound=True)
         else:
-            data = resp.json()
             print(data)
             mp = json.loads(data)
-            print(mp[])
+            print(mp["nameDisplayAs"])
             return 
     else:
         return 400
