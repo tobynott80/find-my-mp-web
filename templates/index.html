@@ -17,6 +17,10 @@
             <input type="text" placeholder="Postcode" name="search" id="search">
             <input type="submit" value="Submit">
         </form>
+
+        {% if notFound==True %}
+            <p>Not Found</p>
+        {% endif %}
     </div>
 </body>
 
