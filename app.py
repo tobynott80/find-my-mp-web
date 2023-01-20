@@ -4,6 +4,15 @@ import json
 
 app = Flask(__name__)
 
+def getImage(mpId):
+    url = "https://members-api.parliament.uk/api/Members/" + str(mpId) + "/PortraitUrl"
+    resp = requests.get(url)
+    data = resp.json()
+    if resp.status_code != 200:
+        return ""
+    return data["value"]
+
+
 @app.route('/')
 def hello():
     return render_template('index.html')
@@ -23,9 +32,10 @@ def search():
             # mp = json.loads(data)
             constituency = data["name"]
             mpName = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]
-            mpParty = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]["latestParty"]
-
-            return render_template('results.html', constituency, mpName, mpParty)
+            mpParty = data["currentRepresentation"]["member"]["value"]["latestParty"]["name"]
+            mpId = data["currentRepresentation"]["member"]["value"]["id"]
+            mpImgUrl = getImage(mpId)
+            return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl)
     else:
         return 400
 

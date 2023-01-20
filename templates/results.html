@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
+    <h1>Find your MP!</h1>
     <div class="results">
-        <p>{{constituency}}</p>
-        <p>{{mpName}}</p>
-        <p>{{mpParty}}</p>
+        <p>Constituency : {{constituency}}</p>
+        <p>Your MP is : {{mpName}}</p>
+        <p>{{mpName}} is a {{mpParty}} member</p>
+        <img src="{{mpImgUrl}}" width="200">
     </div>
 </body>
 </html>
