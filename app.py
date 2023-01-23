@@ -27,8 +27,9 @@ def getNews(mpName):
             data = resp.json()
             data = data["response"]["results"]
             for i in data:
-                print(i["webTitle"])
-                iNews = newsItem(i["webTitle"],i["webPublicationDate"],i["webUrl"])
+                iDate = i["webPublicationDate"]
+                iDate = iDate[0:9]
+                iNews = newsItem(i["webTitle"],iDate,i["webUrl"])
                 newsResults.append(iNews)
             return newsResults
         elif resp.status_code == 401:
