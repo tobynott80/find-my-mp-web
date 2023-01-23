@@ -24,7 +24,10 @@ def getNews(mpName):
         if resp.status_code == 200:
             print("Sucessfully Reached Guardian API")
             data = resp.json()
-            data = data["results"]
+            data = data["response"]["results"]
+            # print(data)
+            for i in data:
+                print(i)
         elif resp.status_code == 401:
             print("Unauthorised: Please Check Guardian API key")
 
