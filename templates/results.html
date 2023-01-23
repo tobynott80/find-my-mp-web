@@ -16,5 +16,12 @@
         <img src="{{mpImgUrl}}" width="200">
     </div>
     <input type="button" onclick="location.href='/';" value="Return To Search" />
+    <div class="news">
+        {% for newsItem in mpNews %}
+        <div class="newsItem">
+            <p>{{newsItem.title}}</p>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

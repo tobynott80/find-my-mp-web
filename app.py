@@ -27,10 +27,13 @@ def getNews(mpName):
             data = resp.json()
             data = data["response"]["results"]
             for i in data:
-                iNews = newsItem(data["webTitle"],["webPublicationDate"],["webUrl"])
+                print(i["webTitle"])
+                iNews = newsItem(i["webTitle"],i["webPublicationDate"],i["webUrl"])
                 newsResults.append(iNews)
+            return newsResults
         elif resp.status_code == 401:
             print("Unauthorised: Please Check Guardian API key")
+            return newsResults
 
 class newsItem:
         def __init__(self, title, date, url):
@@ -61,7 +64,7 @@ def search():
             mpId = data["currentRepresentation"]["member"]["value"]["id"]
             mpImgUrl = getImage(mpId)
             mpNews = getNews(mpName)
-            return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl)
+            return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl, mpNews=mpNews)
     else:
         return 400
 
