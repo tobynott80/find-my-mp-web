@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import sys
 
 app = Flask(__name__)
 
@@ -25,9 +26,9 @@ def getNews(mpName):
             print("Sucessfully Reached Guardian API")
             data = resp.json()
             data = data["response"]["results"]
-            # print(data)
             for i in data:
                 print(i)
+                print("\n")
         elif resp.status_code == 401:
             print("Unauthorised: Please Check Guardian API key")
 
@@ -65,5 +66,12 @@ def search():
         return 400
 
 if __name__ == '__main__':
-    guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
+    if len(sys.argv) == 1:
+        guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
+    elif len(sys.argv) == 2:
+        guardianKey = sys.argv[1]
+        print("Set guardian API key as " + guardianKey)
+    else:
+        print("Expected 1 argument - Guardian API key")
+        exit()
     app.run(debug=True)
