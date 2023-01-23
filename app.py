@@ -11,6 +11,28 @@ def getImage(mpId):
         return ""
     return data["value"]
 
+def getNews(mpName):
+    
+    if guardianKey == '':
+        return 0
+    else:
+        headers = {
+            'api-key': guardianKey,
+        }
+        url = "https://content.guardianapis.com/search?q=" + str(mpName)
+        resp = requests.request("GET", url, headers=headers)
+        if resp.status_code == 200:
+            print("Sucessfully Reached Guardian API")
+            data = resp.json()
+            data = data["results"]
+        elif resp.status_code == 401:
+            print("Unauthorised: Please Check Guardian API key")
+
+class newsItem:
+        def __init__(self, title, date, url):
+            self.title = title
+            self.date = date
+            self.url = url
 
 @app.route('/')
 def hello():
@@ -34,9 +56,11 @@ def search():
             mpParty = data["currentRepresentation"]["member"]["value"]["latestParty"]["name"]
             mpId = data["currentRepresentation"]["member"]["value"]["id"]
             mpImgUrl = getImage(mpId)
+            mpNews = getNews(mpName)
             return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl)
     else:
         return 400
 
 if __name__ == '__main__':
+    guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
     app.run(debug=True)
