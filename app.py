@@ -13,7 +13,7 @@ def getImage(mpId):
     return data["value"]
 
 def getNews(mpName):
-    
+    newsResults = []
     if guardianKey == '':
         return 0
     else:
@@ -27,8 +27,8 @@ def getNews(mpName):
             data = resp.json()
             data = data["response"]["results"]
             for i in data:
-                print(i)
-                print("\n")
+                iNews = newsItem(data["webTitle"],["webPublicationDate"],["webUrl"])
+                newsResults.append(iNews)
         elif resp.status_code == 401:
             print("Unauthorised: Please Check Guardian API key")
 
