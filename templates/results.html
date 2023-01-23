@@ -17,9 +17,10 @@
     </div>
     <input type="button" onclick="location.href='/';" value="Return To Search" />
     <div class="news">
+        <h2>{{mpName}} in the news (Provided by The Guardian)</h2>
         {% for newsItem in mpNews %}
         <div class="newsItem">
-            <p>{{newsItem.title}}</p>
+            <p>{{newsItem.date}} - <a href="{{newsItem.url}}">{{newsItem.title}}</a></p>
         </div>
         {% endfor %}
     </div>
