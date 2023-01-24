@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import sys
 
 app = Flask(__name__)
 
@@ -11,6 +12,35 @@ def getImage(mpId):
         return ""
     return data["value"]
 
+def getNews(mpName):
+    newsResults = []
+    if guardianKey == '':
+        return 0
+    else:
+        headers = {
+            'api-key': guardianKey,
+        }
+        url = "https://content.guardianapis.com/search?q=" + str(mpName)
+        resp = requests.request("GET", url, headers=headers)
+        if resp.status_code == 200:
+            print("Sucessfully Reached Guardian API")
+            data = resp.json()
+            data = data["response"]["results"]
+            for i in data:
+                iDate = i["webPublicationDate"]
+                iDate = iDate[0:9]
+                iNews = newsItem(i["webTitle"],iDate,i["webUrl"])
+                newsResults.append(iNews)
+            return newsResults
+        elif resp.status_code == 401:
+            print("Unauthorised: Please Check Guardian API key")
+            return newsResults
+
+class newsItem:
+        def __init__(self, title, date, url):
+            self.title = title
+            self.date = date
+            self.url = url
 
 @app.route('/')
 def hello():
@@ -34,9 +64,18 @@ def search():
             mpParty = data["currentRepresentation"]["member"]["value"]["latestParty"]["name"]
             mpId = data["currentRepresentation"]["member"]["value"]["id"]
             mpImgUrl = getImage(mpId)
-            return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl)
+            mpNews = getNews(mpName)
+            return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl, mpNews=mpNews)
     else:
         return 400
 
 if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
+    elif len(sys.argv) == 2:
+        guardianKey = sys.argv[1]
+        print("Set guardian API key as " + guardianKey)
+    else:
+        print("Expected 1 argument - Guardian API key")
+        exit()
     app.run(debug=True)

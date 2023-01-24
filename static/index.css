@@ -2,13 +2,13 @@ body {
   background-color: #001b2e;
 }
 
-h1 {
+h1, h2 {
   margin-top: 0px;
   margin-bottom: 0px;
   color: #ffefd3;
 }
 
-p {
+p, a {
   margin: 0px;
   color: #ffefd3;
 }
