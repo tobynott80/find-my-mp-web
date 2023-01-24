@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
 import sys
+import os
 
 app = Flask(__name__)
 
@@ -70,12 +71,9 @@ def search():
         return 400
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
+    if os.environ.get('GUARDIAN_KEY') == '':
         guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
-    elif len(sys.argv) == 2:
-        guardianKey = sys.argv[1]
-        print("Set guardian API key as " + guardianKey)
     else:
-        print("Expected 1 argument - Guardian API key")
-        exit()
-    app.run(debug=True)
+        guardianKey = os.environ.get('GUARDIAN_KEY')
+        print("Set guardian API key as " + guardianKey)
+        app.run(host='0.0.0.0', port=8000)
