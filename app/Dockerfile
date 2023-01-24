@@ -10,6 +10,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 COPY . /app
 
+EXPOSE 8000/udp
+EXPOSE 8000/tcp
+
 ENTRYPOINT ["python3"]
 CMD ["app.py"]
 
