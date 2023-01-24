@@ -31,3 +31,9 @@ p, a {
   font-size: 20px;
   color: #000000;
 }
+
+footer {
+  margin: 0px;
+  color: #ffefd3;
+  font-size: 12px;
+}

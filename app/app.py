@@ -69,8 +69,9 @@ def search():
         return 400
 
 if __name__ == '__main__':
-    if os.environ.get('GUARDIAN_KEY') == '':
+    if os.getenv('GUARDIAN_KEY') == None:
         guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
+        app.run(host='0.0.0.0', port=80)
     else:
         guardianKey = os.environ.get('GUARDIAN_KEY')
         print("Set guardian API key as " + guardianKey)
