@@ -58,8 +58,6 @@ def search():
             return render_template('index.html', notFound=True)
         else:
             data = data["items"][0]["value"]
-            print(data)
-            # mp = json.loads(data)
             constituency = data["name"]
             mpName = data["currentRepresentation"]["member"]["value"]["nameDisplayAs"]
             mpParty = data["currentRepresentation"]["member"]["value"]["latestParty"]["name"]
