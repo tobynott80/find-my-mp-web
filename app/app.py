@@ -76,4 +76,4 @@ if __name__ == '__main__':
     else:
         guardianKey = os.environ.get('GUARDIAN_KEY')
         print("Set guardian API key as " + guardianKey)
-        app.run(host='0.0.0.0', port=8000)
+        app.run(host='0.0.0.0', port=80)
