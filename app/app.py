@@ -21,7 +21,8 @@ def getNews(mpName):
         headers = {
             'api-key': guardianKey,
         }
-        url = "https://content.guardianapis.com/search?q=" + str(mpName)
+        searchTerms = str(mpName).split(' ')
+        url = "https://content.guardianapis.com/search?q=" + searchTerms[0] + "+AND+" + searchTerms[1]
         resp = requests.request("GET", url, headers=headers)
         if resp.status_code == 200:
             print("Sucessfully Reached Guardian API")
@@ -64,6 +65,8 @@ def search():
             mpId = data["currentRepresentation"]["member"]["value"]["id"]
             mpImgUrl = getImage(mpId)
             mpNews = getNews(mpName)
+            if len(mpNews) == 0:
+                mpNews.append(newsItem("No News found","",""))
             return render_template('results.html', constituency=constituency, mpName=mpName, mpParty=mpParty, mpImgUrl=mpImgUrl, mpNews=mpNews)
     else:
         return 400
