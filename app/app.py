@@ -30,7 +30,7 @@ def getNews(mpName):
             data = data["response"]["results"]
             for i in data:
                 iDate = i["webPublicationDate"]
-                iDate = iDate[0:9]
+                iDate = iDate[0:10]
                 iNews = newsItem(i["webTitle"],iDate,i["webUrl"])
                 newsResults.append(iNews)
             return newsResults
