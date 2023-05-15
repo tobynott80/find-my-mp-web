@@ -5,6 +5,8 @@ import os
 
 app = Flask(__name__)
 
+guardianKey = os.environ.get('GUARDIAN_KEY', '')  # defaults to '' if GUARDIAN_KEY is not set
+
 def getImage(mpId):
     url = "https://members-api.parliament.uk/api/Members/" + str(mpId) + "/PortraitUrl"
     resp = requests.get(url)
@@ -72,10 +74,5 @@ def search():
         return 400
 
 
-if os.environ.get('GUARDIAN_KEY') == None:
-    guardianKey = str(input("Please enter the guardian API key \n Note: leave this blank to disable news functionality: "))
-    app.run(host='0.0.0.0', port=80)
-else:
-    guardianKey = os.environ.get('GUARDIAN_KEY')
-    print("Set guardian API key as " + guardianKey)
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
